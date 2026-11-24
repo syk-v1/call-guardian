@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Call Guardian</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 2 4 7v8c0 7.5 5.1 13.4 12 15 6.9-1.6 12-7.5 12-15V7z' fill='%232f6fed'/></svg>" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-level="safe">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 4 7v8c0 7.5 5.1 13.4 12 15 6.9-1.6 12-7.5 12-15V7z"/></svg>
+      <div>
+        <h1>Call Guardian</h1>
+        <p>Listens to the call. Whispers when the caller is running a scam.</p>
+      </div>
+    </div>
+    <div class="settings">
+      <label class="switch"><input type="checkbox" id="whisperToggle" checked /> Spoken whispers</label>
+      <span id="aiPill" class="pill" data-status="unknown">Checking Claude…</span>
+    </div>
+  </header>
+
+  <main class="grid">
+    <section class="card phone" aria-label="Call">
+      <div class="call-head">
+        <span class="avatar" aria-hidden="true">?</span>
+        <div>
+          <div id="callerId" class="caller">No active call</div>
+          <div class="call-meta"><span id="callState">Idle</span> · <span id="callTimer">0:00</span></div>
+        </div>
+      </div>
+
+      <h2>Play a demo call</h2>
+      <p class="hint">Turn your sound on. You hear the call; Guardian's voice cuts in when it spots a tactic.</p>
+      <div class="buttons">
+        <button data-demo="bank" class="btn">Bank fraud call</button>
+        <button data-demo="grandchild" class="btn">Grandchild in trouble</button>
+        <button data-demo="pharmacy" class="btn ghost">Real pharmacy call</button>
+      </div>
+
+      <h2>Or go live</h2>
+      <p class="hint">Put a call (or a friend reading a script) on speaker. Say <b>"Guardian, what should I say?"</b> or <b>"Guardian, is this real?"</b> at any time.</p>
+      <div class="buttons">
+        <button id="liveBtn" class="btn live">Start listening</button>
+        <button id="hangupBtn" class="btn hang">End call</button>
+      </div>
+    </section>
+
+    <section class="card transcript-card" aria-label="Transcript">
+      <h2>Live transcript</h2>
+      <ol id="transcript" class="transcript" aria-live="polite">
+        <li id="emptyTranscript" class="muted">Start a call to see the transcript. Scam phrases get highlighted as they're said.</li>
+      </ol>
+      <div id="summary" class="summary" hidden>
+        <h3></h3>
+        <p></p>
+      </div>
+    </section>
+
+    <section class="card risk" id="riskPanel" data-level="safe" aria-label="Risk">
+      <div class="risk-head">
+        <div>
+          <div class="label">Scam risk</div>
+          <div id="verdict" class="verdict">Looks safe</div>
+        </div>
+        <div id="riskScore" class="score" aria-live="assertive">0</div>
+      </div>
+      <div class="meter"><div id="riskBar"></div></div>
+
+      <h2>Warning signs</h2>
+      <ul id="tactics" class="tactics"></ul>
+
+      <h2>What to say</h2>
+      <p id="safeReply" class="reply"></p>
+
+      <h2>Whispers</h2>
+      <ul id="whispers" class="whispers">
+        <li class="muted">Guardian is quiet until something looks wrong.</li>
+      </ul>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="assertive"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
